@@ -1,23 +1,24 @@
 "use strict";
-
-function createObject(FunctionClass, Args) {
-    return FunctionClass.apply({},Args);
-}
-
-function Student(firstName, lastName) {
-    var fullName;
-
-    fullName = firstName + " " + lastName;
-
-    this.name = function() {
-        return fullName;
+var Student = (function() {
+    function Student(firstName, lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
-    return this;
-}
+    function name(s) {
+        return s.firstName + " " + s.lastName;
+    };
 
-var s = createObject(Student,['Weerasak', 'Chongnguluam']);
-var s2 = createObject(Student,['Kanokon', 'Chansom']);
+    var exported = {
+        Student: Student,
+        name: name,
+    };
 
-console.log(s.name());
-console.log(s2.name());
+    return exported;
+})();
+
+var s = new Student.Student("Weerasak", "Chongnguluam");
+var s2 = new Student.Student("Kanokon", "Chansom");
+
+console.log(Student.name(s));
+console.log(Student.name(s2));
